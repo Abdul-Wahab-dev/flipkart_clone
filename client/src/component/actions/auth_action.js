@@ -10,13 +10,14 @@ import {
 import setAuthToken from "../utils/setAuthToken";
 import jwt_decode from "jwt-decode";
 
+const apiURL = process.env.REACT_APP_API_URL;
 // @route   POST api/user/Login
 // @desc    login user
 export const loginUser = (user, history, clearState) => (dispatch) => {
   dispatch(loading());
   dispatch(clearErrors());
   axios
-    .post("/api/user/Login", user)
+    .post(`${apiURL}/api/user/Login`, user)
     .then((res) => {
       clearState();
       history.push("/");

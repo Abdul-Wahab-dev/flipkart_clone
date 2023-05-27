@@ -10,13 +10,14 @@ import {
 } from "./types";
 import axios from "axios";
 
+const apiURL = process.env.REACT_APP_API_URL;
 // @route     POST /api/products/
 // @desc      add Product
 // @access    Private
 export const addProduct_action = (product, clearStates) => (dispatch) => {
   dispatch(loading());
   axios
-    .post("/api/products", product)
+    .post(`${apiURL}/api/products`, product)
     .then(async (res) => {
       dispatch({
         type: ADD_PRODUCT,
@@ -46,7 +47,7 @@ const imageUploadHandler = (img, res, clearStates, update) => (dispatch) => {
     },
   };
   axios
-    .post("/api/products/image-upload", formData, config)
+    .post(`${apiURL}/api/products/image-upload`, formData, config)
     .then((image) => {
       clearStates();
 
@@ -68,7 +69,7 @@ const imageUploadHandler = (img, res, clearStates, update) => (dispatch) => {
 // @access    Public
 export const getProducts_action = () => (dispatch) => {
   dispatch(loading());
-  axios.get("/api/products/").then((res) => {
+  axios.get(`${apiURL}/api/products/`).then((res) => {
     dispatch({
       type: GET_PRODUCTS,
       payload: res.data.data.products,
@@ -82,7 +83,7 @@ export const getProducts_action = () => (dispatch) => {
 export const getProduct_action = (id) => (dispatch) => {
   dispatch(loading());
 
-  axios.get(`/api/products/${id}`).then((res) => {
+  axios.get(`${apiURL}/api/products/${id}`).then((res) => {
     dispatch({
       type: GET_PRODUCT_BY_ID,
       payload: res.data.data.product,
@@ -96,7 +97,7 @@ export const getProduct_action = (id) => (dispatch) => {
 export const editProducts_action = (product, clearStates) => (dispatch) => {
   dispatch(loading());
   axios
-    .post(`/api/products/update`, { product })
+    .post(`${apiURL}/api/products/update`, { product })
     .then((res) => {
       if (res.data.status === "success") {
         if (product.img.length > 0) {
@@ -123,7 +124,11 @@ export const deleteImageFromS3 =
     const imageArray = deleteImage;
     dispatch(loading());
     axios
-      .post("/api/products/delete-image", { imageArray, product, type })
+      .post(`${apiURL}/api/products/delete-image`, {
+        imageArray,
+        product,
+        type,
+      })
       .then((res) => {
         if (type === true) {
           if (setImagesURL !== null) {
@@ -148,7 +153,7 @@ export const deleteProduct_action = (product) => (dispatch) => {
   product.id = product._id;
   dispatch(loading());
 
-  axios.delete(`/api/products/${product._id}`).then((res) => {
+  axios.delete(`${apiURL}/api/products/${product._id}`).then((res) => {
     dispatch(deleteImageFromS3(product.images, product, false, null));
     // dispatch({
     //   type: DELETE_PRODUCT,
@@ -173,13 +178,15 @@ export const addSliderImage = (sliderImage, nameArray, cb) => (dispatch) => {
   };
 
   axios
-    .post("/api/products/image-upload", formData, config)
+    .post(`${apiURL}/api/products/image-upload`, formData, config)
 
     .then((res) => {
-      axios.post("/api/products/slider-image", nameArray).then((result) => {
-        cb();
-        dispatch(loadingFalse());
-      });
+      axios
+        .post(`${apiURL}/api/products/slider-image`, nameArray)
+        .then((result) => {
+          cb();
+          dispatch(loadingFalse());
+        });
     });
 };
 
@@ -188,7 +195,7 @@ export const addSliderImage = (sliderImage, nameArray, cb) => (dispatch) => {
 // access     Public
 export const getSliderImage = () => (dispatch) => {
   dispatch(loading());
-  axios.get("/api/products/slider").then((res) => {
+  axios.get(`${apiURL}/api/products/slider`).then((res) => {
     dispatch(loadingFalse());
     dispatch({
       type: GET_SLIDER_IMAGES,
@@ -204,7 +211,11 @@ export const getSliderImage = () => (dispatch) => {
 export const deleteSliderImage = (name, id, type, callback) => (dispatch) => {
   dispatch(loading());
   axios
-    .post("/api/products/delete-slider-image", { image: name, id, type })
+    .post(`${apiURL}/api/products/delete-slider-image`, {
+      image: name,
+      id,
+      type,
+    })
     .then((res) => {
       callback();
       dispatch(loadingFalse());
