@@ -1,0 +1,20 @@
+// Auth action types
+export const LOGIN = "LOGIN";
+export const SET_CURRENT_USER = "SET_CURRENT_USER";
+export const GET_ERRORS = "GET_ERRORS";
+export const CLEAR_ERRORS = "CLEAR_ERRORS";
+export const LOADING = "LOADING";
+export const PRODUCT_LOADING = "PRODUCT_LOADING";
+export const CLEAR_LOADING = "CLEAR_LOADING";
+export const ADD_PRODUCT = "ADD_PRODUCT";
+export const EDIT_PRODUCT = "EDIT_PRODUCT";
+export const DELETE_PRODUCT = "DELETE_PRODUCT";
+export const GET_PRODUCTS = "GET_PRODUCTS";
+export const GET_PRODUCT_BY_ID = "GET_PRODUCT_BY_ID";
+export const ADD_TO_CART = "ADD_TO_CART";
+export const GET_CART_ITEMS = "GET_CART_ITEMS";
+export const REMOVE_CART_ITEM = "REMOVE_CART_ITEM";
+export const REMOVE_CART_ITEMS = "REMOVE_CART_ITEMS";
+export const AUTH_LOADING = "AUTH_LOADING";
+export const GET_SLIDER_IMAGES = "GET_SLIDER_IMAGES";
+export const SAVE_SLIDER_IMAGES = "SAVE_SLIDER_IMAGES";
